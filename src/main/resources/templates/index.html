@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meesho - Online Shopping</title>
+    <style>
+        *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#333}
+        header{background:#9f2089;color:#fff;padding:14px 6%;display:flex;align-items:center;gap:25px;position:sticky;top:0;z-index:10}
+        .logo{font-size:28px;font-weight:700}.search{flex:1;max-width:550px;padding:12px 18px;border:0;border-radius:4px;font-size:15px}.nav a{color:#fff;text-decoration:none;margin-left:16px}
+        .hero{padding:35px 6%;background:#fff}.hero h1{margin:0 0 8px;font-size:32px}.hero p{color:#666}
+        .grid{padding:25px 6%;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}.card{background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;padding-bottom:15px}.card img{width:100%;height:210px;object-fit:cover;background:#eee}.card-body{padding:14px}.price{font-size:20px;font-weight:bold}.category{color:#777;font-size:13px;margin:7px 0}.btn{width:100%;border:0;padding:11px;border-radius:5px;background:#9f2089;color:#fff;font-weight:bold;cursor:pointer}.btn:hover{background:#861a74}.empty{padding:50px;text-align:center}
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">meesho</div>
+    <input class="search" placeholder="Search for products, brands and more">
+    <div class="nav"><a href="/cart">Cart</a><a href="/login">Login</a></div>
+</header>
+<section class="hero"><h1>Lowest Prices, Best Quality Shopping</h1><p>Discover fashion, home, beauty and everyday products at affordable prices.</p></section>
+<section class="grid">
+    <div class="card" th:each="p : ${products}">
+        <img th:src="${p.imageUrl}" alt="Product">
+        <div class="card-body">
+            <div class="category" th:text="${p.category}">Category</div>
+            <h3 th:text="${p.name}">Product</h3>
+            <p th:text="${p.description}">Description</p>
+            <div class="price">₹<span th:text="${p.price}">0</span></div>
+            <form action="/cart/add" method="post" style="margin-top:12px">
+                <input type="hidden" name="productId" th:value="${p.id}">
+                <button class="btn" type="submit">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>
